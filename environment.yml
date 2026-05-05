@@ -1,0 +1,27 @@
+name: inverse-modeling
+channels:
+  - conda-forge
+  - pytorch
+  - defaults
+dependencies:
+  - python=3.10
+  - numpy
+  - pandas
+  - jax
+  - pytorch
+  - cpuonly
+  - scikit-learn
+  - matplotlib
+  - jupyter
+  - nbconvert
+  - ipykernel
+  - gmsh
+  - python-gmsh
+  - petsc4py
+  - fenics-basix
+  - pip
+  - pip:
+    - pyfiglet
+    - meshio
+    - git+https://github.com/TRACE-Structures/uncertain_variables.git
+    - git+https://github.com/deepmodeling/jax-fem.git
