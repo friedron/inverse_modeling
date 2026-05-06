@@ -7,7 +7,9 @@ from sklearn.preprocessing import MinMaxScaler, FunctionTransformer
 def identity_func(x):
     if isinstance(x, np.ndarray):
         return x
-    return x.to_numpy()
+    if hasattr(x, 'to_numpy'):
+        return x.to_numpy()
+    return np.array(x)
 
 
 def identity_inverse_func(x):
