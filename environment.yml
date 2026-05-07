@@ -21,6 +21,8 @@ dependencies:
   - fenics-basix
   - pip
   - pip:
+    - plotly
+    - seaborn
     - pyfiglet
     - meshio
     - git+https://github.com/TRACE-Structures/uncertain_variables.git

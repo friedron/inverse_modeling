@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 from jax_fem.solver import ad_wrapper
 from .base import InverseModel
+from jax.scipy.stats import multivariate_normal
 
 
 class JaxFemGradientModel(InverseModel):
@@ -84,6 +85,27 @@ class JaxFemGradientModel(InverseModel):
             return jnp.mean(jnp.square(self.simulate(p) - target_y))
 
         return jax.value_and_grad(loss_fn)(params)
+    
+    def get_likelihood_and_grad(self, params, target_y, sigmas):
+        """Negative log-likelihood and its gradient w.r.t. params via adjoint AD.
+
+        Assumes Gaussian likelihood with fixed variance (i.e., MSE loss up to a constant).
+
+        Parameters
+        ----------
+        params   : array-like, shape (n_params,)
+        target_y : array-like, shape (n_qoi,)
+
+        Returns
+        -------
+        (neg_log_likelihood, grad) — scalar negative log-likelihood value and gradient array of the same shape as params.
+        """
+        def get_likelihood(p):
+            mean = jnp.zeros_like(target_y)
+            cov = jnp.diag(sigmas**2)
+            return multivariate_normal.pdf(p, mean=mean, cov=cov)
+
+        return jax.value_and_grad(get_likelihood)(params)
 
     def predict(self, q):
         """Forward prediction for a batch of parameter sets: q -> y.

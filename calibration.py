@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def calibrate_gradient(
+def gradient_based_model_calibration(
     model,
     target_y,
     initial_params=None,
@@ -145,7 +145,7 @@ class InverseCalibrator:
         if method == "predict":
             return self.model.predict(y, **kwargs)
         elif method == "gradient":
-            return calibrate_gradient(self.model, y, return_history=return_history, **kwargs)
+            return gradient_based_model_calibration(self.model, y, return_history=return_history, **kwargs)
         else:
             raise ValueError(
                 f"Unknown identification method: '{method}'. "
