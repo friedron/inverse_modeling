@@ -25,5 +25,6 @@ dependencies:
     - seaborn
     - pyfiglet
     - meshio
-    - git+https://github.com/TRACE-Structures/uncertain_variables.git
+    - digital_twinning
+    - uncertain_variables
     - git+https://github.com/deepmodeling/jax-fem.git
